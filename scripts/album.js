@@ -13,7 +13,6 @@
      ]
  };
  
- // Another Example Album
  var albumMarconi = {
      title: 'The Telephone',
      artist: 'Guglielmo Marconi',
@@ -29,8 +28,22 @@
      ]
  };
 
+ var albumLedZeppelin = {
+     title: 'Physical Graffiti',
+     artist: 'Led Zeppelin',
+     label: 'Atlantic',
+     year: '1975',
+     albumArtUrl: 'assets/images/album_covers/physical_graffiti.png',
+     songs: [
+         { title: 'Custard Pie', duration: '4:15'},
+         { title: 'Kashmir', duration: '8:37' },
+         { title: 'Trampled Under Foot', duration: '5:36' },
+         { title: 'The Wanton Song', duration: '2:15'},
+         { title: 'Boogie With Stu', duration: '3:14' }
+     ]
+ };
 
-var createSongRow = function(songNumber, songName, songLength){
+function createSongRow(songNumber, songName, songLength){
     var template = 
         '<tr class="album-view-song-item">'
       + '  <td class="song-item-number">' + songNumber + '</td>'
@@ -42,13 +55,13 @@ var createSongRow = function(songNumber, songName, songLength){
     return template;
 };
 
-var setCurrentAlbum = function(album){
-    var albumTitle = document.getElementsByClassName('album-view-title')[0];
-    var albumArtist = document.getElementsByClassName('album-view-artist')[0];
-    var albumReleaseInfo = document.getElementsByClassName('album-view-release-info')[0];
-    var albumImage = document.getElementsByClassName('album-cover-art')[0];
-    var albumSongList = document.getElementsByClassName('album-view-song-list')[0];
-    
+var albumTitle = document.getElementsByClassName('album-view-title')[0];
+var albumArtist = document.getElementsByClassName('album-view-artist')[0];
+var albumReleaseInfo = document.getElementsByClassName('album-view-release-info')[0];
+var albumImage = document.getElementsByClassName('album-cover-art')[0];
+var albumSongList = document.getElementsByClassName('album-view-song-list')[0];
+
+function setCurrentAlbum(album){    
     albumTitle.firstChild.nodeValue = album.title;
     albumArtist.firstChild.nodeValue = album.artist;
     albumReleaseInfo.firstChild.nodeValue = album.year + ' ' + album.label;
@@ -63,10 +76,18 @@ var setCurrentAlbum = function(album){
 
 
 window.onload = function(){
-    setCurrentAlbum(albumPicasso);
+    setCurrentAlbum(albumLedZeppelin);
+    var albums = [albumMarconi, albumPicasso, albumLedZeppelin];
+    var i = 0;
+    
+    albumImage.addEventListener("click", function(event){
+        setCurrentAlbum(albums[i]);
+        i++;
+        if (i == albums.length){
+            i = 0;
+        }
+    });
 };
-
-
 
 
 
